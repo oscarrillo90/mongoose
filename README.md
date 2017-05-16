@@ -22,11 +22,11 @@ You won't know what some of the database files do yet, but that's okay. Make not
 <!-- framing the "why" in big-picture/real world examples -->
 *This workshop is important because:*
 
-We want user data that lasts (or "persists") even when we make changes to the code on our servers! Databases will give us more power to store persistent data even when servers restart. 
+We want user data that lasts (or "persists") even when we make changes to the code on our servers! Databases will give us more power to store persistent data even when servers restart.
 
-There are *many* kinds of databases that are optimized for different things.  We'll start with MongoDB. MongoDB is a widely-used noSQL database, and using it will help you understand how many databases work. 
+There are *many* kinds of databases that are optimized for different things.  We'll start with MongoDB. MongoDB is a widely-used noSQL database, and using it will help you understand how many databases work.
 
-We'll also take advantage of Mongoose, a library that makes it easier to use MongoDB with express projects. 
+We'll also take advantage of Mongoose, a library that makes it easier to use MongoDB with express projects.
 
 
 ### What are the objectives?
@@ -49,25 +49,9 @@ We'll also take advantage of Mongoose, a library that makes it easier to use Mon
 
 ![tumblr_nbhme6bafu1s02vreo1_500](https://cloud.githubusercontent.com/assets/4304660/16811532/b08865a8-48dd-11e6-9474-c114b2e8a00d.gif)
 
-`MongoDB` is a no-SQL database. It is responsible for storing data in containers and making sure that the data is safe and organized. MongoDB stores data in BSON, "a binary JSON format", and it has a JavaScript API. We'll see SQL databases later that store data in a format more like an Excel spreadsheet. 
+`MongoDB` is a no-SQL database. It is responsible for storing data in containers and making sure that the data is safe and organized. MongoDB stores data in BSON, "a binary JSON format", and it has a JavaScript API. We'll see SQL databases later that store data in a format more like an Excel spreadsheet.
 
 `Mongoose` is a library or "wrapper" that gives us a bunch of convenience methods for working with MongoDB records (kind of like jQuery's convenience methods for manipulating the DOM). Generally we will not be interacting _directly_ with MongoDB, instead we'll be working through `mongoose`.
-
-<details><summary>Side-note: Wondering what makes noSQL different from SQL? (we'll talk more about this later)</summary>
-
-There are two main categories of databases: relational (SQL) databases, and non-relational (no-SQL) databases. Mongo is a no-SQL database that stores entries in a JSON-like format.
-
-Since MongoDB is the first database we've worked with it's hard for us to discuss the tradeoffs between SQL/no-SQL. But here's a great analogy from StackOverflow:
-
-> "NoSQL databases store information like you would recipes in a book. When you want to know how to make a cake, you go to that recipe, and all of the information about how to make that cake (ingredients, preparation, mixing, baking, finishing, etc.) are all on that one page.
->
-> SQL is like shopping for the ingredients for the recipe. In order to get all of your ingredients into your cart, you have to go to many different aisles to get each ingredient. When you are done shopping, your grocery cart will be full of all the ingredients you had to run around and collect.
->
-> Wouldn’t it be nicer if there was a store that was organized by recipe, so you could go to one place in the store and grab everything you need from that one spot? Granted you’ll find ingredients like eggs in 50 different places, so there’s a bit of overhead when stocking the shelves, but from a consumer standpoint it would be much easier/faster to find what they're looking for."
-
--<a href="http://stackoverflow.com/questions/14428069/sql-and-nosql-analogy-for-the-non-technical/14428221#14428221" target="_blank">mgoffin, Jan 20 '13 at 19:15</a>
-
-</details>
 
 
 ## Schemas and Models
@@ -94,10 +78,6 @@ With the above Schema, we can expect that all of our Address Book entries would 
 ```js
 var Contact = mongoose.model('Contact', ContactSchema);
 ```
-
-> In mongoose, a schema represents the structure of a particular document, either completely or just a portion of the document. It's a way to express expected properties and values as well as constraints and indexes. A model defines a programming interface for interacting with the database (read, insert, update, etc). So a schema answers "what will the data in this collection look like?" and a model provides functionality like "Are there any records matching this query?" or "Add a new document to the collection".
-
-> *[Source: Peter Lyons on StackOverflow](http://stackoverflow.com/questions/22950282/mongoose-schema-vs-model/22950402#22950402)*
 
 ![image](https://i.chzbgr.com/full/7986468352/hE55E1B66/)
 
@@ -204,7 +184,7 @@ This will allow us to use the `Todo` model in `server.js`.
 
 Most databases also require that we specify the data type for each attribute.  In mongoose we can use data types from JavaScript, such as String, Number, and Array. Here's a list of all the [available data-types](http://mongoosejs.com/docs/schematypes.html) in mongoose.
 
-Let's look at this example from the starter-code for these notes. 
+Let's look at this example from the starter-code for these notes.
 
 ```js
 // models/person.js
@@ -227,7 +207,7 @@ module.exports = Person;
 
 > In the above, note how we've assigned **String**, **Number** and even a **Boolean** as the data types for this Schema.
 
-Once the model object is exported from its individual file, you'll want to `require` it to use it in another file. 
+Once the model object is exported from its individual file, you'll want to `require` it to use it in another file.
 
 Here's an example of how we could require the model directly into a server file:
 
@@ -236,8 +216,9 @@ Here's an example of how we could require the model directly into a server file:
   var Person = require('./models/person');
   // now Person stores the Person model from the other file!
 ```
-  
-Here's a slightly more complex example using the structure with a `models/index.js` file to group together all the models:
+
+Here's a slightly more complex example using the structure with a `models/index.js` file to group together all the models:  
+
 ```js
   // models/index.js
   var PersonModel = require('./models/person');
@@ -247,7 +228,9 @@ Here's a slightly more complex example using the structure with a `models/index.
   // or
   // module.exports.Person = PersonModel;
 ```
-... and in `server.js`:
+
+... and in `server.js`:  
+
 ```js
   // server.js
   var db = require(`./models`); // grab the export object from models/index.js
@@ -266,16 +249,16 @@ Instead of setting up a full server, we'll use a simple script to experiment wit
 Now in the REPL that opens, try making a single instance of a person with the code below:
 
 ```js
-  var ilias = new db.Person({
-      firstName: "Ilias",
-      lastName: "Tsangaris",
-      height: 6.0,
-      superPower: "Puppy",
-      weakness: "Puppy",
+  var justin = new db.Person({
+      firstName: "Jusin",
+      lastName: "Castilla",
+      height: 6.2,
+      superPower: "Bearding",
+      weakness: "Topo Chico",
       isExcited: true
   });
 
-  ilias.save(function(err, newPerson) {
+  justin.save(function(err, newPerson) {
     if(err) { return console.log(err) }
     console.log("saved new person: ", newPerson);
   });
@@ -286,11 +269,11 @@ The above logs to the terminal the `newPerson` success object:
 ```bash
 saved new person:  {
   __v: 0,
-  firstName: "Ilias",
-  lastName: "Tsangaris",
-  height: 6.0,
-  superPower: "Puppy",
-  weakness: "Puppy",
+  firstName: "Justin",
+  lastName: "Castilla",
+  height: 6.2,
+  superPower: "Bearding",
+  weakness: "Topo Chico",
   isExcited: true
   _id: 57866b9f9d89c840336a135e }
 
@@ -305,18 +288,10 @@ Until now, when we wanted to access or manipulate stored data on our server, we 
 <details>
   <summary>At what API route did we complete each of the above?</summary>
   <ul>
-    <li>
-      sending along the whole array: GET /todos
-    </li>
-    <li>
-      finding single objects in an array: GET /todos/:id
-    </li>
-    <li>
-      adding objects to an array: POST /todos
-    </li>
-    <li>
-      deleting elements from an array: DELETE /todos/:id
-    </li>
+    <li>sending along the whole array: GET /todos</li>
+    <li>finding single objects in an array: GET /todos/:id</li>
+    <li>adding objects to an array: POST /todos</li>
+    <li>deleting elements from an array: DELETE /todos/:id</li>
   </ul>
 </details>
 <br>
@@ -353,19 +328,19 @@ We've seen the `new` keyword before! It creates new instances of an object. We u
 
 <details><summary>click for code</summary>
 
-```
+
+```javascript
 // create new todo
 app.post('/api/todos', function(req, res) {
     // create new todo with form data (`req.body`)
-    var newTodo = new db.Todo(req.body);
-
-    // save new todo in db
-    newTodo.save(function(err, savedTodo) {
-        res.json(savedTodo);
+    var newTodo = req.body;
+    db.Todo.create(newTodo, function(err, createdTodo) {
+    	if(err){return console.log(err)}
+    	res.json(createdTodo);
     });
 });
 ```
-  
+
 </details>
 <br>
 
@@ -374,9 +349,10 @@ app.post('/api/todos', function(req, res) {
 
 We can use <a href="http://mongoosejs.com/docs/api.html#query_Query-findOne">.findOne()</a> to return the first document in the collection that matches certain criteria. In this case, we're looking for a todo that has a certain `_id`.
 
-<details><summary>click for code</summary>
+<details><summary>click for code</summary>  
 
-```
+
+``` javascript
 // get one todo
 app.get('/api/todos/:id', function(req, res) {
     // get todo id from url params (`req.params`)
@@ -384,6 +360,7 @@ app.get('/api/todos/:id', function(req, res) {
 
     // find todo in db by id
     db.Todo.findOne({ _id: todoId }, function(err, foundTodo) {
+       	if(err){return console.log(err)}
         res.json(foundTodo);
     });
 });
@@ -395,9 +372,9 @@ app.get('/api/todos/:id', function(req, res) {
 <br>
 
 
-#### Update todo: `.findOne()` and `.save()`
+#### Update todo: `.findOneAndUpdate()`
 
-Similar to the last example, we can use `.findOne()` to find the document with a certain `_id`. After updating the document, we use `.save()` to persist our changes to the database.
+Similar to the last example, we can use `.findOneAndUpdate()` to find the document with a certain `_id` and  then update the document in one method.
 
 <details><summary>click for code</summary>
 
@@ -407,20 +384,19 @@ app.put('/api/todos/:id', function(req, res) {
     // get todo id from url params (`req.params`)
     var todoId = req.params.id;
 
-    // find todo in db by id
-    db.Todo.findOne({ _id: todoId }, function(err, foundTodo) {
-        // update the todos's attributes
-        foundTodo.task = req.body.task;
-        foundTodo.description = req.body.description;
+    // create an updateTodo object from req.body
+	var updateTodo = {
+	  task: req.body.task,
+      description: req.body.description
+    }
 
-        // save updated todo in db
-        foundTodo.save(function(err, savedTodo) {
-            res.json(savedTodo);
-        });
+    db.Todo.findOneAndUpdate({ _id: todoId }, updateTodo, { new: true}, function(err, updatedTodo){
+      if(err){return console.log(err)}
+	  res.json(updatedTodo);
     });
 });
 ```
-  
+
 </details>
 <br>
 
@@ -451,7 +427,7 @@ app.delete('/api/todos/:id', function(req, res) {
 
 
 ## Independent Practice
-Practice the skills covered in this workshop with the [Mongoose books training](https://github.com/sf-wdi-labs/mongoose-books-app)
+Practice the skills covered in this workshop with the [Mongoose books training](https://github.com/generalassembly-atx/mongoose-books-app). We'll be doing **Sprint 1** only today.
 
 ## Closing Thoughts
 - Why is Mongoose useful?
