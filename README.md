@@ -238,48 +238,6 @@ Here's a slightly more complex example using the structure with a `models/index.
 ```
 
 
-### Using the Model
-
-Instead of setting up a full server, we'll use a simple script to experiment with some Mongoose methods.  You can see the code for the script in `console.js`. Note that it does `require` the models. It sets up a REPL (read-evaluate-print-loop) that you can use to interact with the database.  
-
-1. Make sure `mongod` is running in a tab of Terminal.
-
-2. In another tab, run `node console.js` to enter the REPL.  
-
-Now in the REPL that opens, try making a single instance of a person with the code below:
-
-```js
-  var justin = new db.Person({
-      firstName: "Jusin",
-      lastName: "Castilla",
-      height: 6.2,
-      superPower: "Bearding",
-      weakness: "Topo Chico",
-      isExcited: true
-  });
-
-  justin.save(function(err, newPerson) {
-    if(err) { return console.log(err) }
-    console.log("saved new person: ", newPerson);
-  });
-```
-
-The above logs to the terminal the `newPerson` success object:
-
-```bash
-saved new person:  {
-  __v: 0,
-  firstName: "Justin",
-  lastName: "Castilla",
-  height: 6.2,
-  superPower: "Bearding",
-  weakness: "Topo Chico",
-  isExcited: true
-  _id: 57866b9f9d89c840336a135e }
-
-```
-
-> Note: Every model instance that we store in the database is assigned an ID. In MongoDB, IDs have a key of `_id` and a value that is a 24-character string.  We can use this ID later to look up a particular record. Later on we'll look at how we can use those IDs can help us form relationships in the database.
 
 ## CRUD Operations with Mongoose
 
