@@ -280,7 +280,7 @@ app.get('/api/todos', function(req, res) {
 <br>
 
 
-#### Create new todo: `new` and `.save()`
+#### Create new todo: `.create()`
 
 We've seen the `new` keyword before! It creates new instances of an object. We use it here to create new instances of our `Todo` model. We then call `.save()` to store the new todo in our database.
 
